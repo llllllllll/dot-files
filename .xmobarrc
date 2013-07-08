@@ -1,0 +1,58 @@
+Config { font = "xft:Bitstream Ubuntu Light-11"
+       , bgColor = "#3c3b37"
+       , fgColor = "#dfdbd2"
+       , position = Top
+       , lowerOnStart = False
+       , commands = 
+         [ Run Weather "KBDL" 
+           [ "-t", "Weather : <tempC>C"
+           , "-L", "18"
+           , "-H", "25"
+           , "-n", "#4AC948"
+           , "-h", "#DB2929"
+           , "-l", "#00B7EB"] 36000
+         , Run Network "eth0" 
+           [ "-t", "<dev>: <rx>R|<tx>T"
+           , "-S", "True" 
+           , "-L", "-1"
+           , "-H", "32"
+           , "-n", "#00B7EB"
+           , "-h", "#DB2929"] 25
+         , Run Network "eth1" 
+           [ "-t", "<dev>: <rx>R|<tx>T"
+           , "-S", "True" 
+           , "-L", "-1"
+           , "-H", "32"
+           , "-n", "#00B7EB"
+           , "-h", "#DB2929"] 25
+         , Run Cpu 
+           [ "-t", "CPU: <total>%"
+           , "-m", "2"
+           , "-c", "0"
+           , "-a", "l"
+           , "-L", "-1"
+           , "-H", "50"
+           , "-n", "#00B7EB"
+           , "-h", "#DB2929"] 25
+         , Run Memory 
+           [ "-t", "MEM: <usedratio>%"
+           , "-m", "2"
+           , "-c", "0"
+           , "-a", "l"
+           , "-L", "-1"
+           , "-H", "50"
+           , "-n", "#00B7EB"
+           , "-h", "#DB2929"] 25
+         , Run Swap 
+           [ "-t", "SWAP: <usedratio>%" 
+           , "-L", "-1" 
+           , "-H", "50"
+           , "-n", "#00B7EB"
+           , "-h", "#DB2929"] 25
+         , Run Date "%a %b %_d %Y <fc=#00B7EB>%H:%M:%S</fc>" "date" 10
+         , Run StdinReader
+         ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %cpu% | %memory% | %swap% | %eth0% } %StdinReader% { %KBDL% | %date% "
+       }
