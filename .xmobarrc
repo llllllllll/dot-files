@@ -1,5 +1,5 @@
-Config { font = "xft:Bitstream Ubuntu Light-11"
-       , bgColor = "#3c3b37"
+Config { font = "xft: Droid Sans Mono-12"
+       , bgColor = "#383838"
        , fgColor = "#dfdbd2"
        , position = Top
        , lowerOnStart = False
@@ -11,7 +11,7 @@ Config { font = "xft:Bitstream Ubuntu Light-11"
            , "-n", "#4AC948"
            , "-h", "#DB2929"
            , "-l", "#00B7EB"] 36000
-         , Run Network "eth0" 
+         , Run Network "enp3s0" 
            [ "-t", "<dev>: <rx>R|<tx>T"
            , "-S", "True" 
            , "-L", "-1"
@@ -44,7 +44,10 @@ Config { font = "xft:Bitstream Ubuntu Light-11"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
          , Run Swap 
-           [ "-t", "SWAP: <usedratio>%" 
+           [ "-t", "SWAP: <usedratio>%"
+           , "-m", "2"
+           , "-c", "0"
+           , "-a", "l"
            , "-L", "-1" 
            , "-H", "50"
            , "-n", "#00B7EB"
@@ -54,5 +57,5 @@ Config { font = "xft:Bitstream Ubuntu Light-11"
          ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %cpu% | %memory% | %swap% | %eth0% } %StdinReader% { %KBDL% | %date% "
+       , template = "%cpu% | %memory% | %swap% | %enp3s0% } %StdinReader% { %KBDL% | %date% "
        }

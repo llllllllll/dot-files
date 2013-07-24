@@ -12,8 +12,8 @@ import System.IO
 
 main = do
   xmobar_in <- spawnPipe "xmobar" 
-  xmproc <- spawnPipe "xcompmgr" >> spawnPipe "sh ~/.fehbg" >> 
-            spawnPipe "sh ~/Documents/mouse.sh"
+  xmproc <- spawnPipe "xcompmgr" >> spawn "sh ~/.fehbg" 
+           -- spawnPipe "sh ~/Documents/mouse.sh"
   xmonad $ defaultConfig
     { layoutHook         = smartBorders $ avoidStruts $ layoutHook defaultConfig
     , terminal           = "gnome-terminal"
@@ -37,13 +37,14 @@ manage_hooks = composeAll
 
 log_hooks xmobar = composeAll
                    [ fadeInactiveLogHook 0.65
-                   , dynamicLogWithPP xmobarPP { ppOutput  = hPutStrLn xmobar
-                                               , ppTitle   = xmobarColor "#00B7EB" "" . shorten 50
-                                               , ppLayout  = const ""
-                                               , ppCurrent = xmobarColor "#DB2929" ""
-                                               , ppHidden  = xmobarColor "#00B7EB" ""
-                                               , ppSep     = " | "
-                                               }
+                   , dynamicLogWithPP
+                     xmobarPP{ ppOutput  = hPutStrLn xmobar
+                             , ppTitle   =xmobarColor "#00B7EB" "". shorten 50
+                             , ppLayout  = const ""
+                             , ppCurrent = xmobarColor "#DB2929" ""
+                             , ppHidden  = xmobarColor "#00B7EB" ""
+                             , ppSep     = " | "
+                             }
                    ]
 
 
