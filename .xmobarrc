@@ -4,29 +4,29 @@ Config { font = "xft: Droid Sans Mono-12"
        , position = Top
        , lowerOnStart = False
        , commands = 
-         [ Run Weather "KBDL" 
-           [ "-t", "Weather : <tempC>C"
+         [ Run Weather "KBOS" 
+           [ "-t", "TEMP:<tempC>C"
            , "-L", "18"
            , "-H", "25"
            , "-n", "#4AC948"
            , "-h", "#DB2929"
            , "-l", "#00B7EB"] 36000
          , Run Network "enp3s0" 
-           [ "-t", "<dev>: <rx>R|<tx>T"
+           [ "-t", "<dev>:<rx>R|<tx>T"
            , "-S", "True" 
            , "-L", "-1"
            , "-H", "32"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
          , Run Network "eth1" 
-           [ "-t", "<dev>: <rx>R|<tx>T"
+           [ "-t", "<dev>:<rx>R|<tx>T"
            , "-S", "True" 
            , "-L", "-1"
            , "-H", "32"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
          , Run Cpu 
-           [ "-t", "CPU: <total>%"
+           [ "-t", "CPU:<total>%"
            , "-m", "2"
            , "-c", "0"
            , "-a", "l"
@@ -35,7 +35,7 @@ Config { font = "xft: Droid Sans Mono-12"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
          , Run Memory 
-           [ "-t", "MEM: <usedratio>%"
+           [ "-t", "MEM:<usedratio>%"
            , "-m", "2"
            , "-c", "0"
            , "-a", "l"
@@ -44,7 +44,7 @@ Config { font = "xft: Droid Sans Mono-12"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
          , Run Swap 
-           [ "-t", "SWAP: <usedratio>%"
+           [ "-t", "SWAP:<usedratio>%"
            , "-m", "2"
            , "-c", "0"
            , "-a", "l"
@@ -57,5 +57,5 @@ Config { font = "xft: Droid Sans Mono-12"
          ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% | %swap% | %enp3s0% } %StdinReader% { %KBDL% | %date% "
+       , template = "%cpu% | %memory% | %swap% | %enp3s0% } %StdinReader% { %KBOS% | %date% "
        }
