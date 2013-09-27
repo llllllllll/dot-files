@@ -22,10 +22,16 @@
     '("marmalade" .
       "http://marmalade-repo.org/packages/"))
 (package-initialize)
+
+;; rainbow delimeters
 (global-rainbow-delimiters-mode)
+
+;; alt-tab expand
 (global-set-key (kbd "M-<tab>") 'dabbrev-expand)
 (define-key minibuffer-local-map (kbd "M-<tab>") 'dabbrev-expand)
 
+
+;; backup stuff
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))
   backup-by-copying t
   version-control t
@@ -33,3 +39,14 @@
   kept-new-versions 20
   kept-old-versions 5
   )
+
+;; auctex stuff
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
