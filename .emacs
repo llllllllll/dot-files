@@ -1,4 +1,8 @@
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(add-hook (quote haskell-mode-hook) t)
  '(column-number-mode t)
  '(custom-enabled-themes (quote (monokai)))
@@ -13,12 +17,17 @@
  '(initial-scratch-message ";; Scratch Buffer")
  '(setq inhibit-startup-message t)
  '(show-paren-mode t)
+ '(show-trailing-whitespace t)
  '(tool-bar-mode nil))
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
 
 (require 'package)
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
     '("marmalade" .
       "http://marmalade-repo.org/packages/"))
 (package-initialize)
@@ -50,3 +59,8 @@
 (setq-default TeX-master nil)(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
+
+;; 80 char limit stuff
+(require 'whitespace)
+(setq whitespace-style '(face empty lines-tail trailing))
+(global-whitespace-mode t)
