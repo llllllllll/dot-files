@@ -12,4 +12,8 @@ then
   . $HOME/.bash_aliases
 fi
 
-export EDITOR='emacs -nw --color=never'
+source /usr/share/doc/pkgfile/command-not-found.bash
+
+TERM=xterm-256color
+
+export EDITOR='emacs -nw'

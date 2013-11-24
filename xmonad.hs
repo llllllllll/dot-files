@@ -1,8 +1,7 @@
 -- Joe Jevnik
--- 13.10.2013
+-- 24.11.2013
 
 import XMonad
-import XMonad.Actions.Volume
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.FadeWindows
@@ -18,7 +17,7 @@ main = do
     spawn "xcompmgr" >> spawn "sh ~/.fehbg"
     xmonad $ defaultConfig
        { layoutHook  = smartBorders $ avoidStruts $ layoutHook defaultConfig
-       , terminal    = "gnome-terminal"
+       , terminal    = "xterm"
        , borderWidth = 0
        , modMask     = mod4Mask
        , manageHook  = manage_hooks
