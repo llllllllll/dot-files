@@ -34,6 +34,14 @@ xterm*cursorBlink:     true
 xterm*cursorOffTime:   500
 xterm*cursoronTime:    500
 
+! bold and underline -----------------------------------------------------------
+XTerm*colorBDMode:     true
+XTerm*colorBD:         #00FFFF
+XTerm*colorULMode:     true
+XTerm*colorUL:         rgb:e4/e4/e4
+
+! font -------------------------------------------------------------------------
+
 Xft.dpi:               96
 Xft.antialias:         true
 Xft.rgba:              rgb
