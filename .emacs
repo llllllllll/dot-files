@@ -43,7 +43,7 @@
 
 ;; soft-tab
 (require 'soft-tab)
-(local-set-key [backspace] 'backspace-spaces-and-tabs-hungry)
+(local-set-key [backspace] 'backspace-soft-tab)
 
 ;; marmalade
 (require 'package)
