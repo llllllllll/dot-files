@@ -14,7 +14,7 @@ import XMonad.Util.Run
 
 main = do
     xmobar_in <- spawnPipe "xmobar"
-    spawn "xcompmgr" >> spawn "sh ~/.fehbg"
+    mapM_ spawn ["xcompmgr","sh ~/.fehbg","xrdb ~/.Xresources"]
     xmonad $ defaultConfig
        { layoutHook  = smartBorders $ avoidStruts $ layoutHook defaultConfig
        , terminal    = "xterm"
