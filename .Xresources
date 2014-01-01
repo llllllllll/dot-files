@@ -33,6 +33,7 @@ xterm*toolBar:         false
 xterm*cursorBlink:     true
 xterm*cursorOffTime:   500
 xterm*cursoronTime:    500
+xterm*metaSendsEscape: true
 
 ! bold and underline -----------------------------------------------------------
 XTerm*colorBDMode:     true

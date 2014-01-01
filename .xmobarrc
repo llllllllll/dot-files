@@ -3,30 +3,30 @@ Config { font = "xft: Droid Sans Mono-12"
        , fgColor = "#dfdbd2"
        , position = Top
        , lowerOnStart = False
-       , commands = 
-         [ Run Weather "KBOS" 
-           [ "-t", "TEMP:<tempC>C"
+       , commands =
+         [ Run Weather "KBOS"
+           [ "-t", "weather:<tempC>c"
            , "-L", "18"
            , "-H", "25"
            , "-n", "#4AC948"
            , "-h", "#DB2929"
            , "-l", "#00B7EB"] 36000
-         , Run Network "enp3s0" 
+         , Run Network "enp3s0"
            [ "-t", "<dev>:<rx>R|<tx>T"
-           , "-S", "True" 
+           , "-S", "True"
            , "-L", "-1"
            , "-H", "32"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
-         , Run Network "eth1" 
+         , Run Network "eth1"
            [ "-t", "<dev>:<rx>R|<tx>T"
-           , "-S", "True" 
+           , "-S", "True"
            , "-L", "-1"
            , "-H", "32"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
-         , Run Cpu 
-           [ "-t", "CPU:<total>%"
+         , Run Cpu
+           [ "-t", "cpu:<total>%"
            , "-m", "2"
            , "-c", "0"
            , "-a", "l"
@@ -34,8 +34,8 @@ Config { font = "xft: Droid Sans Mono-12"
            , "-H", "50"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
-         , Run Memory 
-           [ "-t", "MEM:<usedratio>%"
+         , Run Memory
+           [ "-t", "mem:<usedratio>%"
            , "-m", "2"
            , "-c", "0"
            , "-a", "l"
@@ -43,12 +43,12 @@ Config { font = "xft: Droid Sans Mono-12"
            , "-H", "50"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
-         , Run Swap 
-           [ "-t", "SWAP:<usedratio>%"
+         , Run Swap
+           [ "-t", "swp:<usedratio>%"
            , "-m", "2"
            , "-c", "0"
            , "-a", "l"
-           , "-L", "-1" 
+           , "-L", "-1"
            , "-H", "50"
            , "-n", "#00B7EB"
            , "-h", "#DB2929"] 25
