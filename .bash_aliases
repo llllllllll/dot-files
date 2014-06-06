@@ -1,5 +1,4 @@
 # Utils
-alias emacs='emacs -nw'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias log-out='sudo pkill -u -KILL joejev'
@@ -8,6 +7,7 @@ alias bash_aliases='$EDITOR ~/.bash_aliases'
 alias gmail='firefox mail.google.com'
 alias lconnect='firefox https://lconnect.wit.edu/cp/home/displaylogin'
 alias gh='firefox https://github.com/llllllllll/'
+alias connect='sudo netctl switch-to'
 
 # School
 alias vsc='g++ -pedantic -Wall'
