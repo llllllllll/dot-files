@@ -5,6 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# TODO: Rice this.
 PS1='[\u@\h \W]\$ '
 
 if [ -f $HOME/.bash_aliases ]
@@ -20,7 +21,8 @@ export TERM=xterm-256color
 export EDITOR=emacs
 export BROWSER=firefox
 
-export PATH=$PATH:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p451/bin:$HOME/.cabal/bin:$HOME/bin
+# Add my shit here mang.
+export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p451/bin:$PATH
 
 # Python nose complete
 # copied from newer versions of bash

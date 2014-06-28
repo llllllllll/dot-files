@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(add-hook (quote haskell-mode-hook) t)
  '(column-number-mode t)
- '(when (eq window-system 'X) (custom-enabled-themes (quote (monokai))))
+ '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes (quote ("fb4bf07618eab33c89d72ddc238d3c30918a501cf7f086f2edf8f4edba9bd59f" "fd551deb0cdab152acbec440ef007115aaffb0fdf891a222a90c540b26d96074" "60f04e478dedc16397353fb9f33f0d895ea3dab4f581307fbf0aa2f07e658a40" "1ac9a474d289e6a44894d1b484b3aa5eb345cea6ed6f32ec5214c797ac7ddf23" "68769179097d800e415631967544f8b2001dae07972939446e21438b1010748c" "301f218fa2357b2aa2a433e049f87e059c5ba2ad8b161634d758fbf007bf1d0a" default)))
  '(global-linum-mode t)
  '(global-rainbow-delimiters-mode t)
@@ -127,6 +127,14 @@
 
 ;; Quantopian stuff:
 ;; Root directory for Quantopian projects.
+(setq venv-location "~/.virtualenvs")
+
+
+;; https://github.com/porterjamesj/virtualenvwrapper.el/blob/master
+(setq-default mode-line-format (cons '(:exec venv-current-name)
+                                     mode-line-format))
+
+
 (setq quantopian-root
       (let (temp)
         (setq temp (getenv "QUANTO_ROOT"))
