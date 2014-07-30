@@ -25,7 +25,9 @@
  '(setq inhibit-startup-message t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
- '(when window-system t))
+ '(when window-system t)
+ '(help-at-pt-timer-delay 0.9)
+ '(help-at-pt-display-when-idle '(flymake-overlay)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -40,7 +42,9 @@
  '(rainbow-delimiters-depth-5-face ((t (:foreground "pink"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red")))))
 
-(set-face-background 'default nil)
+;; fixes the background color in xterm (or not X)
+(unless (eq window-system 'x)
+  (custom-set-faces '(default ((t (:background "nil"))))))
 
 ;; custom modules.
 (add-to-list 'load-path "~/.emacs.d")
@@ -66,11 +70,14 @@
 (global-set-key (kbd "M-<tab>") 'dabbrev-expand)
 (define-key minibuffer-local-map (kbd "M-<tab>") 'dabbrev-expand)
 
+;; Add my path to my path...
+(setq exec-path (cons "~/bin" exec-path))
+
 ;; hs-lint
-;;(require 'hs-lint)
-;;(defun my-haskell-mode-hook ()
-;;   (local-set-key "\C-cl" 'hs-lint))
-;;(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+(require 'hs-lint)
+(defun hslint-mode-hook ()
+   (local-set-key "c-cl" 'hs-lint))
+(add-hook 'haskell-mode-hook 'hslint-mode-hook)
 
 ;; backup
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))
@@ -125,7 +132,26 @@
 (setq jedi:complete-on-dot t)
 
 
-;; Quantopian stuff:
+;; Python:
+(require 'flymake)
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list (executable-find "flake8") (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+
+
+
+
+
 ;; Root directory for Quantopian projects.
 (setq venv-location "~/.virtualenvs")
 
@@ -140,9 +166,6 @@
         (setq temp (getenv "QUANTO_ROOT"))
         (if temp (file-name-as-directory temp) "~/quantopian")))
 
-;; ================
-;; Custom functions
-;; ================
 (defun qtags ()
   "Run etags on Quantopian python source file."
   (interactive)

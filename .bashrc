@@ -18,7 +18,7 @@ source /usr/bin/virtualenvwrapper.sh
 source ~/.profile
 
 export TERM=xterm-256color
-export EDITOR=emacs
+export EDITOR='emacs -nw'
 export BROWSER=firefox
 
 # Add my shit here mang.
