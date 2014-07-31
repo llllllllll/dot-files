@@ -73,11 +73,27 @@
 ;; Add my path to my path...
 (setq exec-path (cons "~/bin" exec-path))
 
-;; hs-lint
-(require 'hs-lint)
-(defun hslint-mode-hook ()
-   (local-set-key "c-cl" 'hs-lint))
-(add-hook 'haskell-mode-hook 'hslint-mode-hook)
+(require 'flymake)
+(defun flymake-Haskell-init ()
+  (flymake-simple-make-init-impl
+   'flymake-create-temp-with-folder-structure nil nil
+   (file-name-nondirectory buffer-file-name)
+   'flymake-get-Haskell-cmdline))
+(defun flymake-get-Haskell-cmdline (source base-dir)
+  (list "flycheck_haskell.pl"
+        (list source base-dir)))
+
+(push '(".+\\.hs$" flymake-Haskell-init flymake-simple-java-cleanup)
+      flymake-allowed-file-name-masks)
+(push '(".+\\.lhs$" flymake-Haskell-init flymake-simple-java-cleanup)
+      flymake-allowed-file-name-masks)
+(push
+ '("^\\(\.+\.hs\\|\.lhs\\):\\([0-9]+\\):\\([0-9]+\\):\\(.+\\)"
+   1 2 3 4) flymake-err-line-patterns)
+(add-hook
+ 'haskell-mode-hook
+ '(lambda ()
+    (if (not (null buffer-file-name)) (flymake-mode))))
 
 ;; backup
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))
