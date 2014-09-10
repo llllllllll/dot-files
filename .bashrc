@@ -22,7 +22,8 @@ export EDITOR='emacs -nw'
 export BROWSER=firefox
 
 # Add my shit here mang.
-export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p451/bin:$PATH
+export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p481/bin:$HOME/.rvm/gems/ruby-2.0.0-p481@global/bin:$HOME/.rvm/gems/ruby-2.0.0-p481/bin$PATH
+
 
 # Python nose complete
 # copied from newer versions of bash

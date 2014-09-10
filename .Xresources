@@ -49,4 +49,4 @@ Xft.rgba:              rgb
 Xft.hinting:           true
 Xft.hintstyle:         hintslight
 
-xterm*faceName:        xft: Droid Sans Mono-11
+xterm*faceName:        xft: Droid Sans Mono-16
