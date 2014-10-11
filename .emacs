@@ -22,6 +22,7 @@
  '(initial-scratch-message ";; Scratch Buffer
 ")
  '(rainbow-delimiters-highlight-brackets-p t)
+ '(safe-local-variable-values (quote ((eval when (fboundp (quote rainbow-mode)) (rainbow-mode 1)))))
  '(scheme-program-name "guile")
  '(setq inhibit-startup-message t)
  '(show-paren-mode t)
@@ -152,8 +153,23 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
+
+
+(defun python-set-trace (module)
+  "Inserts a set_trace() call from MODULE at point."
+  (interactive
+   (list
+    (completing-read "module (pdb): " '("pdb" "rdb" "nose"))))
+  (cond
+   ((or (string= module "pdb") (string= module ""))
+    (insert "import pdb;pdb.set_trace()"))
+   ((string= module "rdb")
+    (insert "from celery.contrib import rdb;rdb.set_trace()"))
+   ((string= module "nose")
+    (insert "from nose.tools import set_trace;set_trace()"))))
 
 
 ;; Python:
@@ -187,18 +203,34 @@
                                      mode-line-format))
 
 
+;; The quantopian root directory.
 (setq quantopian-root
-      (let (temp)
-        (setq temp (getenv "QUANTO_ROOT"))
-        (if temp (file-name-as-directory temp) "~/quantopian")))
+      (file-name-as-directory
+       (or (getenv "QUANTO_ROOT") "~/quantopian")))
+
 
 (defun qtags ()
   "Run etags on Quantopian python source file."
   (interactive)
-  (shell-command
-   (format
-    "find %s -and -and -name '*.py' -not -name '*\.pyc' -not -name '*__init__.py' | xargs etags -o %s"
-    quantopian-root (concat quantopian-root "TAGS"))))
+  (let ((tag-file (concat quantopian-root "TAGS")))
+    (setq tags-file-name tag-file)
+    (shell-command
+     (format
+      "find %s -name '*.py' -not -name '*\.pyc' -not -name '*__init__.py' \
+| xargs etags"
+      quantopian-root ))))
+
+
+(require 'magit)
+(defun git-tags ()
+  "Run etags over all source files in the current git repo."
+  (interactive)
+  (let ((git-root (magit-get-top-dir)))
+    (magit-git-command "tags" git-root))
+  ;; magit-git-command opens a buffer that we don't care about.
+  (delete-windows-on magit-process-buffer-name)
+  (tags-reset-tags-tables))
+
 
 (defun qgrep ()
   "Grep for regex in python files within the value specified for"
@@ -214,6 +246,7 @@
 -and -not -name \"*.pyc\" -exec grep %s --color=auto -e \"%s\" {} +")
     ;; Grep for the specified regex in .py and .sh files within quantopian-root.
     (grep-find (format grep-fmt quantopian-root grep-flags regex))))
+
 
 (defun iqgrep ()
   "Grep for regex in python files within the value specified for"
