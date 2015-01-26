@@ -10,7 +10,6 @@
  '(column-number-mode t)
  '(font-use-system-font t)
  '(global-linum-mode t)
- '(global-rainbow-delimiters-mode t)
  '(haskell-font-lock-symbols nil)
  '(haskell-indent-after-keywords
    (quote
@@ -29,7 +28,6 @@
  '(initial-scratch-message ";; Scratch Buffer
 ")
  '(magit-use-overlays nil)
- '(rainbow-delimiters-highlight-brackets-p t)
  '(safe-local-variable-values
    (quote
     ((eval when
@@ -47,13 +45,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "cyan"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "lawn green"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "plum"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "CadetBlue3"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "pink"))))
- '(rainbow-delimiters-unmatched-face ((t (:foreground "red")))))
+ '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
 
 
 (menu-bar-mode -1)
@@ -75,9 +67,6 @@
              '("melpa" .
                "http://melpa.milkbox.net/packages/"))
 (package-initialize)
-
-;; rainbow delimeters
-(global-rainbow-delimiters-mode)
 
 ;; alt-tab expand
 (global-set-key (kbd "M-<tab>") 'dabbrev-expand)
@@ -181,8 +170,6 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
-(add-to-list 'load-path "~/.emacs.d/qdb/")
-(load "qdb.el")
 (defun python-set-trace (module)
   "Inserts a set_trace() call from MODULE at point."
   (interactive
