@@ -12,7 +12,16 @@
  '(global-linum-mode t)
  '(global-rainbow-delimiters-mode t)
  '(haskell-font-lock-symbols nil)
- '(haskell-indent-after-keywords (quote (("where" 4 0) ("of" 4) ("do" 4) ("mdo" 4) ("rec" 4) ("in" 4 0) ("{" 4) "if" "then" "else" "let")))
+ '(haskell-indent-after-keywords
+   (quote
+    (("where" 4 0)
+     ("of" 4)
+     ("do" 4)
+     ("mdo" 4)
+     ("rec" 4)
+     ("in" 4 0)
+     ("{" 4)
+     "if" "then" "else" "let")))
  '(haskell-indent-thenelse 2)
  '(haskell-mode-hook (quote (turn-on-haskell-indent)) t)
  '(help-at-pt-display-when-idle (quote (flymake-overlay)) nil (help-at-pt))
@@ -21,8 +30,14 @@
  '(inhibit-startup-screen t)
  '(initial-scratch-message ";; Scratch Buffer
 ")
+ '(magit-use-overlays nil)
  '(rainbow-delimiters-highlight-brackets-p t)
- '(safe-local-variable-values (quote ((eval when (fboundp (quote rainbow-mode)) (rainbow-mode 1)))))
+ '(safe-local-variable-values
+   (quote
+    ((eval when
+           (fboundp
+            (quote rainbow-mode))
+           (rainbow-mode 1)))))
  '(scheme-program-name "guile")
  '(setq inhibit-startup-message t)
  '(show-paren-mode t)
@@ -34,13 +49,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 151 :width normal))))
+ '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 158 :width normal))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "cyan"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "lawn green"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "plum"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "CadetBlue3"))))
  '(rainbow-delimiters-depth-5-face ((t (:foreground "pink"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red")))))
+
+
+(menu-bar-mode -1)
 
 ;; fixes the background color in xterm (or not X)
 (unless (eq window-system 'x)
@@ -49,9 +67,6 @@
 ;; Don't go over 80 chars in paragraphs.
 (setq-default fill-column 80)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-
-;; custom modules.
-(add-to-list 'load-path "~/.emacs.d")
 
 ;; marmalade
 (require 'package)
@@ -105,8 +120,28 @@
   version-control t
   delete-old-versions t
   kept-new-versions 20
-  kept-old-versions 5
-  )
+  kept-old-versions 5)
+
+
+;; git diff in the gutter.
+(require 'diff-hl)
+(global-diff-hl-mode)
+
+
+(defun add-to-multiple-hooks (function hooks)
+  "Adds a function to all the hooks in hooks."
+  (mapc (lambda (hook)
+          (add-hook hook function))
+        hooks))
+
+
+;; fci-mode.
+(add-to-multiple-hooks
+ 'fci-mode
+ '(python-mode-hook
+   lisp-mode-hook
+   emacs-lisp-mode-hook
+   c-mode-hook))
 
 
 ;; theme
@@ -154,21 +189,31 @@
 (put 'downcase-region 'disabled nil)
 
 
+
+
+;; Used by virtualenvwrapper.el
+(setq venv-location (expand-file-name "~/.virtualenvs"))
+
+(setq jedi:setup-keys t)
+(setq jedi:complete-on-dot t)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
-
+(add-to-list 'load-path "~/.emacs.d/qdb/")
+(load "qdb.el")
 (defun python-set-trace (module)
   "Inserts a set_trace() call from MODULE at point."
   (interactive
    (list
-    (completing-read "module (pdb): " '("pdb" "rdb" "nose"))))
+    (completing-read "module (nose): " '("pdb" "rdb" "nose" "qdb"))))
   (cond
-   ((or (string= module "pdb") (string= module ""))
+   ((string= module "pdb")
     (insert "import pdb;pdb.set_trace()"))
    ((string= module "rdb")
     (insert "from celery.contrib import rdb;rdb.set_trace()"))
-   ((string= module "nose")
+   ((string= module "qdb")
+    (insert "import qdb;qdb.set_trace()"))
+   ((or (string= module "nose") (string= module ""))
     (insert "from nose.tools import set_trace;set_trace()"))))
 
 
@@ -189,13 +234,6 @@
                '("\\.py\\'" flymake-pyflakes-init)))
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
-
-
-
-
-
-;; Root directory for Quantopian projects.
-(setq venv-location "~/.virtualenvs")
 
 
 ;; https://github.com/porterjamesj/virtualenvwrapper.el/blob/master
@@ -230,6 +268,15 @@
   ;; magit-git-command opens a buffer that we don't care about.
   (delete-windows-on magit-process-buffer-name)
   (tags-reset-tags-tables))
+
+(defun git-grep ()
+  "Grep for a symbol within the git repo of the current file."
+  (interactive)
+  (let (sym regex)
+    (setq sym (thing-at-point 'symbol))
+    (setq regex (read-regexp "Expression" sym))
+    (require 'vc-git)
+    (vc-git-grep regex "" "")))
 
 
 (defun qgrep ()

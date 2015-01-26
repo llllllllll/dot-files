@@ -21,7 +21,7 @@ export EDITOR='emacs -nw'
 export BROWSER=firefox
 
 # Add my shit here mang.
-export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p481/bin:$HOME/.rvm/gems/ruby-2.0.0-p481@global/bin:$HOME/.rvm/gems/ruby-2.0.0-p481/bin$PATH
+export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p481/bin:$HOME/.rvm/gems/ruby-2.0.0-p481@global/bin:$HOME/.rvm/gems/ruby-2.0.0-p481/bin:$PATH
 
 
 # Python nose complete
@@ -64,3 +64,12 @@ _nosetests()
     __ltrim_colon_completions "$cur"
 }
 complete -o nospace -F _nosetests nosetests
+
+
+docker-clean(){
+    docker ps -aq | xargs docker rm "$@"
+}
+
+docker-clean-images(){
+    docker images | grep \<none\> | tr -s ' ' | cut -d' ' -f3 | xargs docker rmi "$@"
+}
