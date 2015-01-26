@@ -24,8 +24,6 @@
      "if" "then" "else" "let")))
  '(haskell-indent-thenelse 2)
  '(haskell-mode-hook (quote (turn-on-haskell-indent)) t)
- '(help-at-pt-display-when-idle (quote (flymake-overlay)) nil (help-at-pt))
- '(help-at-pt-timer-delay 0.9)
  '(if window-system t)
  '(inhibit-startup-screen t)
  '(initial-scratch-message ";; Scratch Buffer
@@ -49,7 +47,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 158 :width normal))))
+ '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "cyan"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "lawn green"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "plum"))))
@@ -88,30 +86,7 @@
 ;; Add my path to my path...
 (setq exec-path (cons "~/bin" exec-path))
 
-(require 'flymake)
-(defun flymake-Haskell-init ()
-  (flymake-simple-make-init-impl
-   'flymake-create-temp-with-folder-structure nil nil
-   (file-name-nondirectory buffer-file-name)
-   'flymake-get-Haskell-cmdline))
-(defun flymake-get-Haskell-cmdline (source base-dir)
-  (list "flycheck_haskell.pl"
-        (list source base-dir)))
-
-(push '(".+\\.hs$" flymake-Haskell-init flymake-simple-java-cleanup)
-      flymake-allowed-file-name-masks)
-(push '(".+\\.lhs$" flymake-Haskell-init flymake-simple-java-cleanup)
-      flymake-allowed-file-name-masks)
-(push
- '("^\\(\.+\.hs\\|\.lhs\\):\\([0-9]+\\):\\([0-9]+\\):\\(.+\\)"
-   1 2 3 4) flymake-err-line-patterns)
-(add-hook
- 'haskell-mode-hook
- '(lambda ()
-    (if (not (null buffer-file-name)) (flymake-mode))))
-
-
-;; flyspell fix
+;; Flyspell fix
 (setq flyspell-issue-welcome-flag nil)
 
 ;; backup
@@ -134,6 +109,13 @@
           (add-hook hook function))
         hooks))
 
+
+;; flycheck
+(add-to-multiple-hooks
+ 'flycheck-mode
+ '(python-mode-hook
+   lisp-mode-hook
+   haskell-mode-hook))
 
 ;; fci-mode.
 (add-to-multiple-hooks
@@ -215,26 +197,6 @@
     (insert "import qdb;qdb.set_trace()"))
    ((or (string= module "nose") (string= module ""))
     (insert "from nose.tools import set_trace;set_trace()"))))
-
-
-;; Python:
-(require 'flymake)
-(setq temporary-file-directory "~/.emacs.d/tmp/")  ;; Get rid of the tmp files.
-(setq flymake-max-parallel-syntax-checks nil)
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list (executable-find "flake8") (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-
 
 ;; https://github.com/porterjamesj/virtualenvwrapper.el/blob/master
 (setq-default mode-line-format (cons '(:exec venv-current-name)
