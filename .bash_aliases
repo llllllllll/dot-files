@@ -8,6 +8,11 @@ alias gmail='firefox mail.google.com'
 alias lconnect='firefox https://lconnect.wit.edu/cp/home/displaylogin'
 alias gh='firefox https://github.com/llllllllll/'
 alias connect='sudo netctl switch-to'
+alias qipython='ipython --profile=`basename "$VIRTUAL_ENV"`'
+
+# sml with readline.
+alias sml='rlwrap -f /usr/local/sml/keywords -t sml sml'
+
 
 # School
 alias vsc='g++ -pedantic -Wall'
