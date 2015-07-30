@@ -8,6 +8,7 @@ alias gmail='firefox mail.google.com'
 alias lconnect='firefox https://lconnect.wit.edu/cp/home/displaylogin'
 alias gh='firefox https://github.com/llllllllll/'
 alias connect='sudo netctl switch-to'
+alias build_ext='python setup.py build_ext --inplace'
 alias qipython='ipython --profile=`basename "$VIRTUAL_ENV"`'
 
 # sml with readline.
