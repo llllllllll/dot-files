@@ -1,7 +1,7 @@
 # Utils
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
-alias log-out='sudo pkill -u -KILL joejev'
+alias log-out='sudo pkill -u -KILL yui'
 alias dotemacs='$EDITOR ~/.emacs'
 alias bash_aliases='$EDITOR ~/.bash_aliases'
 alias gmail='firefox mail.google.com'
@@ -10,6 +10,8 @@ alias gh='firefox https://github.com/llllllllll/'
 alias connect='sudo netctl switch-to'
 alias build_ext='python setup.py build_ext --inplace'
 alias qipython='ipython --profile=`basename "$VIRTUAL_ENV"`'
+alias work-monitor='xrandr --output HDMI2 --auto --right-of eDP1'
+alias single-monitor='xrandr --output HDMI2 --off'
 
 # sml with readline.
 alias sml='rlwrap -f /usr/local/sml/keywords -t sml sml'

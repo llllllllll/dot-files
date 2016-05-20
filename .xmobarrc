@@ -11,7 +11,7 @@ Config { font = "xft:Droid Sans Mono:size=15:antialias=true"
            , "-n", "#4AC948"
            , "-h", "#DB2929"
            , "-l", "#00B7EB"] 36000
-         , Run Network "wlp3s0"
+         , Run Network "wlp4s0"
            [ "-t", "<dev>:<rx>R|<tx>T"
            , "-S", "True"
            , "-L", "-1"
@@ -50,5 +50,5 @@ Config { font = "xft:Droid Sans Mono:size=15:antialias=true"
          ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% | %swap% | %wlp3s0% } %StdinReader% { %KBOS% | %date% "
+       , template = "%cpu% | %memory% | %swap% | %wlp4s0% } %StdinReader% { %KBOS% | %date% "
        }

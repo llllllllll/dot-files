@@ -12,6 +12,8 @@ then
   . $HOME/.bash_aliases
 fi
 
+ulimit -c unlimited
+
 source /usr/share/doc/pkgfile/command-not-found.bash
 source /usr/bin/virtualenvwrapper.sh
 source ~/.profile
@@ -19,9 +21,12 @@ source ~/.profile
 export TERM=xterm-256color
 export EDITOR='emacs -nw'
 export BROWSER=firefox
+export ATLAS=/usr/lib/libatlas.so
+export BLAS=/usr/lib/libblas.so
+export LAPACK=/usr/lib/liblapack.so
 
 # Add my shit here mang.
-export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p481/bin:$HOME/.rvm/gems/ruby-2.0.0-p481@global/bin:$HOME/.rvm/gems/ruby-2.0.0-p481/bin:$PATH
+export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p481/bin:$HOME/.rvm/gems/ruby-2.0.0-p481@global/bin:$HOME/.rvm/gems/ruby-2.0.0-p481/bin:/usr/local/sml/bin/:$PATH
 
 
 # Python nose complete
@@ -73,3 +78,25 @@ docker-clean(){
 docker-clean-images(){
     docker images | grep \<none\> | tr -s ' ' | cut -d' ' -f3 | xargs docker rmi "$@"
 }
+
+function melt-eval(){
+  touch __empty4melt.c;
+  gcc -fplugin=melt -fplugin-arg-melt-mode=eval \
+      -fplugin-arg-melt-arg="$*" -c __empty4melt.c -o /dev/null
+  rm __empty4melt.c
+}
+
+
+function melt-repl(){
+    touch __empty4melt.c
+    gcc -fplugin=melt -fplugin-arg-melt-mode=repl -o /dev/null __empty4melt.c
+    rm __empty4melt.c
+}
+
+
+function drop-test-mongo-dbs()
+{
+    mongo admin --eval 'db.getMongo().getDBNames().filter(function(name){return name.match("qexec_test_")}).forEach(function(name){db = db.getMongo().getDB(name); print(db); db.dropDatabase()})'
+}
+
+export PATH="$PATH:/home/yui/miniconda3/bin"

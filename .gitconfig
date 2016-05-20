@@ -1,5 +1,7 @@
 [user]
 	email = joe@quantopian.com
-	name = llllllllll
+	name = Joe Jevnik
 [push]
 	default = simple
+[pull]
+        rebase = true

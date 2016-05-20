@@ -30,7 +30,36 @@
  '(magit-use-overlays nil)
  '(safe-local-variable-values
    (quote
-    ((eval when
+    ((flycheck-gcc-include-path list "../include" "../../include"
+                                (replace-regexp-in-string "
+\\'" ""
+(shell-command-to-string "etc/which_py_include")))
+     (flycheck-gcc-include-path list "../include" "../../include"
+                                (shell-command-to-string "etc/which_py_include"))
+     (flycheck-gcc-include-path "../include" "../../include"
+                                (shell-command-to-string "etc/which_py_include"))
+     (flycheck-gcc-include-path list
+                                (concat "." "include/"))
+     (flycheck-gcc-include-path list
+                                (concat
+                                 (file-name-directory load-file-name)
+                                 "include/"))
+     (flycheck-gcc-include-path
+      (concat
+       (file-name-directory load-file-name)
+       "/include/"))
+     (flycheck-gcc-include-path list
+                                (concat
+                                 (file-name-directory load-file-name)
+                                 "/include/"))
+     (flycheck-gcc-include-path
+      ("../../include"))
+     (flycheck-gcc-include-path
+      (list "." "../../include"))
+     (flycheck-gcc-include-path
+      ("." "../../include"))
+     (flycheck-gcc-include-path . "../../include")
+     (eval when
            (fboundp
             (quote rainbow-mode))
            (rainbow-mode 1)))))
@@ -45,8 +74,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
-
+ '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 158 :width normal)))))
 
 (menu-bar-mode -1)
 
@@ -104,7 +132,9 @@
  'flycheck-mode
  '(python-mode-hook
    lisp-mode-hook
-   haskell-mode-hook))
+   haskell-mode-hook
+   c-mode-hook
+   c++-mode-hook))
 
 ;; fci-mode.
 (add-to-multiple-hooks
@@ -112,8 +142,14 @@
  '(python-mode-hook
    lisp-mode-hook
    emacs-lisp-mode-hook
-   c-mode-hook))
+   c-mode-hook
+   c++-mode-hook))
 
+(defun c++-mode-style-hook ()
+  (c-set-style "stroustrup")
+  (setq-default flycheck-gcc-language-standard "gnu++14"))
+
+(add-hook 'c++-mode-hook 'c++-mode-style-hook)
 
 ;; theme
 (load-theme 'monokai t)
@@ -159,9 +195,6 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-
-
-
 ;; Used by virtualenvwrapper.el
 (setq venv-location (expand-file-name "~/.virtualenvs"))
 
@@ -189,34 +222,10 @@
 (setq-default mode-line-format (cons '(:exec venv-current-name)
                                      mode-line-format))
 
-
 ;; The quantopian root directory.
 (setq quantopian-root
       (file-name-as-directory
        (or (getenv "QUANTO_ROOT") "~/quantopian")))
-
-
-(defun qtags ()
-  "Run etags on Quantopian python source file."
-  (interactive)
-  (let ((tag-file (concat quantopian-root "TAGS")))
-    (setq tags-file-name tag-file)
-    (shell-command
-     (format
-      "find %s -name '*.py' -not -name '*\.pyc' -not -name '*__init__.py' \
-| xargs etags"
-      quantopian-root ))))
-
-
-(require 'magit)
-(defun git-tags ()
-  "Run etags over all source files in the current git repo."
-  (interactive)
-  (let ((git-root (magit-get-top-dir)))
-    (magit-git-command "tags" git-root))
-  ;; magit-git-command opens a buffer that we don't care about.
-  (delete-windows-on magit-process-buffer-name)
-  (tags-reset-tags-tables))
 
 (defun git-grep ()
   "Grep for a symbol within the git repo of the current file."
@@ -226,7 +235,6 @@
     (setq regex (read-regexp "Expression" sym))
     (require 'vc-git)
     (vc-git-grep regex "" "")))
-
 
 (defun qgrep ()
   "Grep for regex in python files within the value specified for"
@@ -243,7 +251,6 @@
     ;; Grep for the specified regex in .py and .sh files within quantopian-root.
     (grep-find (format grep-fmt quantopian-root grep-flags regex))))
 
-
 (defun iqgrep ()
   "Grep for regex in python files within the value specified for"
   "quantopian-root. Uses grep-find for built-in history."
@@ -258,3 +265,45 @@
 -and -not -name \"*.pyc\" -exec grep %s --color=auto -e \"%s\" {} +")
     ;; Grep for the specified regex in .py and .sh files within quantopian-root.
     (grep-find (format grep-fmt quantopian-root grep-flags regex))))
+
+(defun kill-current-defun ()
+  (interactive)
+  (let* ((bounds (bounds-of-thing-at-point 'defun))
+         (start (car bounds))
+         (stop (cdr bounds)))
+    (kill-region start stop)))
+
+
+(defun shell-command-on-filename (&optional command filename)
+  (interactive)
+  (let ((cmd (if command command (read-string "Command: ")))
+        (fname (if filename filename (buffer-file-name))))
+    (shell-command (format "%s %s" cmd fname))))
+
+(defmacro make-shell-command-for-current-file (command)
+  `(defun ,command (&rest args)
+     (interactive)
+     (apply 'shell-command-on-filename ,(symbol-name command) args)))
+
+(make-shell-command-for-current-file nosetests)
+(make-shell-command-for-current-file py.test)
+
+(require 'magit)
+(defun git-tags ()
+  "Run etags over all source files in the current git repo."
+  (interactive)
+  (save-window-excursion
+    (let ((git-root (magit-toplevel)))
+      (shell-command (format "git tags %s" git-root))
+      (visit-tags-table git-root))))
+
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
+(load "gforth.el" nil t t)
+(add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
+(setq forth-indent-level 2)
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-x C-SPC") 'mc/edit-lines)
+
+(global-set-key (kbd "C-x g") 'git-grep)
