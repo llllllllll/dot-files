@@ -227,44 +227,17 @@
       (file-name-as-directory
        (or (getenv "QUANTO_ROOT") "~/quantopian")))
 
+
 (defun git-grep ()
   "Grep for a symbol within the git repo of the current file."
   (interactive)
-  (let (sym regex)
-    (setq sym (thing-at-point 'symbol))
-    (setq regex (read-regexp "Expression" sym))
+  (let* ((sym (thing-at-point 'symbol))
+         (regex (read-regexp "Expression" sym)))
     (require 'vc-git)
-    (vc-git-grep regex "" "")))
+    (vc-git-grep regex  "" (vc-git-root default-directory))))
 
-(defun qgrep ()
-  "Grep for regex in python files within the value specified for"
-  "quantopian-root. Uses grep-find for built-in history."
-  (interactive)
-  (let (sym regex grep-fmt grep-flags)
-    ;; Interactively get a regex to search for, using the symbol under the
-    ;; point as a default.
-    (setq sym (thing-at-point 'symbol))
-    (setq regex (read-regexp "Expression" sym))
-    (setq grep-flags "-nH")
-    (setq grep-fmt "find %s -type f '(' -name \"*.py\" -or -name \"*.sh\" ')' \
--and -not -name \"*.pyc\" -exec grep %s --color=auto -e \"%s\" {} +")
-    ;; Grep for the specified regex in .py and .sh files within quantopian-root.
-    (grep-find (format grep-fmt quantopian-root grep-flags regex))))
+(global-set-key (kbd "C-x g") 'git-grep)
 
-(defun iqgrep ()
-  "Grep for regex in python files within the value specified for"
-  "quantopian-root. Uses grep-find for built-in history."
-  (interactive)
-  (let (sym regex grep-fmt grep-flags)
-    ;; Interactively get a regex to search for, using the symbol under the
-    ;; point as a default.
-    (setq sym (thing-at-point 'symbol))
-    (setq regex (read-regexp "Expression" sym))
-    (setq grep-flags "-niH")
-    (setq grep-fmt "find %s -type f '(' -name \"*.py\" -or -name \"*.sh\" ')' \
--and -not -name \"*.pyc\" -exec grep %s --color=auto -e \"%s\" {} +")
-    ;; Grep for the specified regex in .py and .sh files within quantopian-root.
-    (grep-find (format grep-fmt quantopian-root grep-flags regex))))
 
 (defun kill-current-defun ()
   (interactive)
@@ -305,5 +278,3 @@
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-x C-SPC") 'mc/edit-lines)
-
-(global-set-key (kbd "C-x g") 'git-grep)
