@@ -10,17 +10,14 @@ alias gh='firefox https://github.com/llllllllll/'
 alias connect='sudo netctl switch-to'
 alias build_ext='python setup.py build_ext --inplace'
 alias qipython='ipython --profile=`basename "$VIRTUAL_ENV"`'
-alias work-monitor='xrandr --output HDMI2 --auto --right-of eDP1'
-alias single-monitor='xrandr --output HDMI2 --off'
+alias work-monitor='xrandr --output HDMI2 --auto --left-of eDP1 --output DP1 --left-of HDMI2 --auto --rotate right'
+alias single-monitor='xrandr --output HDMI2 --off --output DP1 --off'
 
 # sml with readline.
 alias sml='rlwrap -f /usr/local/sml/keywords -t sml sml'
+# kona with readline
+alias k='rlwrap k'
 
-
-# School
-alias vsc='g++ -pedantic -Wall'
-
-# Humor
 # p-please run my command.
 alias please='sudo $(history -p !!)'
 

@@ -28,41 +28,6 @@
  '(initial-scratch-message ";; Scratch Buffer
 ")
  '(magit-use-overlays nil)
- '(safe-local-variable-values
-   (quote
-    ((flycheck-gcc-include-path list "../include" "../../include"
-                                (replace-regexp-in-string "
-\\'" ""
-(shell-command-to-string "etc/which_py_include")))
-     (flycheck-gcc-include-path list "../include" "../../include"
-                                (shell-command-to-string "etc/which_py_include"))
-     (flycheck-gcc-include-path "../include" "../../include"
-                                (shell-command-to-string "etc/which_py_include"))
-     (flycheck-gcc-include-path list
-                                (concat "." "include/"))
-     (flycheck-gcc-include-path list
-                                (concat
-                                 (file-name-directory load-file-name)
-                                 "include/"))
-     (flycheck-gcc-include-path
-      (concat
-       (file-name-directory load-file-name)
-       "/include/"))
-     (flycheck-gcc-include-path list
-                                (concat
-                                 (file-name-directory load-file-name)
-                                 "/include/"))
-     (flycheck-gcc-include-path
-      ("../../include"))
-     (flycheck-gcc-include-path
-      (list "." "../../include"))
-     (flycheck-gcc-include-path
-      ("." "../../include"))
-     (flycheck-gcc-include-path . "../../include")
-     (eval when
-           (fboundp
-            (quote rainbow-mode))
-           (rainbow-mode 1)))))
  '(scheme-program-name "guile")
  '(setq inhibit-startup-message t)
  '(show-paren-mode t)
@@ -150,6 +115,9 @@
   (setq-default flycheck-gcc-language-standard "gnu++14"))
 
 (add-hook 'c++-mode-hook 'c++-mode-style-hook)
+(add-hook
+ 'c++-mode-hook
+ (lambda () (setq flycheck-gcc-language-standard "gnu++17")))
 
 ;; theme
 (load-theme 'monokai t)
@@ -226,6 +194,14 @@
 (setq quantopian-root
       (file-name-as-directory
        (or (getenv "QUANTO_ROOT") "~/quantopian")))
+
+
+(defmacro with-window-if-exists (window-or-nil-form &rest body)
+  `(let (window-or-nil-value ,window-or-nil-form)
+     (if window-or-nil-value
+         (with-selected-window
+             ,@body)
+       ,@body)))
 
 
 (defun git-grep ()
