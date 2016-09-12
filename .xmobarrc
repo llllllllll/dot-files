@@ -4,14 +4,7 @@ Config { font = "xft:Droid Sans Mono:size=15:antialias=true"
        , position = Top
        , lowerOnStart = False
        , commands =
-         [ Run Weather "KBOS"
-           [ "-t", "weather:<tempC>c"
-           , "-L", "18"
-           , "-H", "25"
-           , "-n", "#4AC948"
-           , "-h", "#DB2929"
-           , "-l", "#00B7EB"] 36000
-         , Run Network "wlp4s0"
+         [ Run Network "wlp4s0"
            [ "-t", "<dev>:<rx>R|<tx>T"
            , "-S", "True"
            , "-L", "-1"
@@ -50,5 +43,5 @@ Config { font = "xft:Droid Sans Mono:size=15:antialias=true"
          ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% | %swap% | %wlp4s0% } %StdinReader% { %KBOS% | %date% "
+       , template = "%cpu% | %memory% | %swap% | %wlp4s0% } %StdinReader% { %date% "
        }

@@ -22,7 +22,7 @@ import XMonad.Util.Run (spawnPipe)
 
 main :: IO ()
 main = do
-    xmobarIn <- spawnPipe "xmobar"
+    xmobarIn <- spawnPipe "xmobar -x 2"
     mapM_ spawn ["xcompmgr","sh ~/.fehbg","xrdb ~/.Xresources"]
     xmonad $ defaultConfig
        { layoutHook  = smartBorders $ avoidStruts $ layoutHook defaultConfig
