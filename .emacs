@@ -28,6 +28,155 @@
  '(initial-scratch-message ";; Scratch Buffer
 ")
  '(magit-use-overlays nil)
+ '(package-selected-packages
+   (quote
+    (yaml-mode virtualenvwrapper sml-mode multiple-cursors monokai-theme markdown-mode magit latex-preview-pane jedi flycheck-haskell fill-column-indicator diff-hl cython-mode bison-mode)))
+ '(safe-local-variable-values
+   (quote
+    ((eval setq flycheck-gcc-include-path
+           (quote
+            ("include" ".." "/usr/include/python3.6m" "../submodules/libpy/include" "../../../submodules/libpy/include/")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" ".." "/usr/include/python3.6m"
+             (\, "../submodules/libpy/include")
+             "../../../submodules/libpy/include/")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" ".." "/usr/include/python3.6m")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "../" "/usr/include/python3.6m")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("../" "../include" "../../include" "/usr/include/python3.6m" "../gtest/googletest/include")))
+     (eval setq flycheck-gcc-include-path
+           (list "../" "../../" "/usr/include/python3.6m"
+                 (expand-file-name "~/.virtualenvs/fundamentals/lib/python3.6/site-packages/numpy/core/include")))
+     (c-file-style
+      (\, "gnu"))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python3.6m"
+                 (expand-file-name "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include")))
+     (eval c-set-offset
+           (quote innamespace)
+           4)
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python3.4m"
+                 (expand-file-name "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python3.4m"
+                 (expand-file "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python3.4m"
+             (\,
+              (expand-file "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include")))))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python3.4m"
+             (expand-file "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include"))))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python3.4m" "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python4.5m" "~/.virtualenvs/fundamentals/lib/python3.4/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/home/yui/.virtualenvs/databazaar/lib/python3.4/site-packages/numpy/core/include" "/usr/include/python3.4m")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "../" "../include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "..")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "../../")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python3.5m"))
+     (c-set-style "stroustrup")
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python3.5m")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "../" "../include" "/usr/include/python3.5m" "../gtest/googletest/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("../" "../include" "../../include" "/usr/include/python3.5m" "../gtest/googletest/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("../" "../../include" "/usr/include/python3.5m" "../gtest/googletest/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "/usr/include/python3.5m" "../gtest/googletest/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "/usr/include/python3.5m" "gtest/googletest/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("../../include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("../" "../include" "/usr/include/python3.5m")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("../" "../../include" "/usr/include/python3.5m")))
+     (eval c-set-offset
+           (quote innamespace)
+           0)
+     (eval add-to-list
+           (quote c-offset-alist)
+           (quote
+            ((quote innamespace)
+             0)))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "/usr/include/python3.5m")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (shell-command-to-string "echo -n $WORKON_HOME/qexec/lib/python2.7/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (shell-command-to-string "echo $WORKON_HOME/qexec/lib/python2.7/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (shell-command-to-string "python -c 'import numpy as np;print(np.get_include())'")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (shell-command-to-string "python -c 'import numpy as np;print np.get_include()'")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (shell-command-to-string "./etc/npinclude")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (shell-command-to-string "etc/npinclude")))
+     (eval setq flycheck-gcc-include-path
+           (list "/usr/include/python2.7" "qexec/utils/"
+                 (read-shell-command "etc/npinclude")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python2.7" "qexec/utils/"
+             (read-shell-command "etc/npinclude"))))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python2.7" "qexec/utils/"
+             (\,
+              (read-shell-command "etc/npinclude")))))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("/usr/include/python2.7" "qexec/utils/" "/home/yui/.virtualenvs/qexec/lib/python2.7/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("qexec/utils/" "/home/yui/.virtualenvs/qexec/lib/python2.7/site-packages/numpy/core/include")))
+     (eval setq flycheck-gcc-include-path
+           (quote
+            ("include" "../"))))))
  '(scheme-program-name "guile")
  '(setq inhibit-startup-message t)
  '(show-paren-mode t)
@@ -91,6 +240,7 @@
           (add-hook hook function))
         hooks))
 
+(setq-default flycheck-disabled-checkers '(c/c++-clang))
 
 ;; flycheck
 (add-to-multiple-hooks
@@ -112,7 +262,8 @@
 
 (defun c++-mode-style-hook ()
   (c-set-style "stroustrup")
-  (setq-default flycheck-gcc-language-standard "gnu++14"))
+  (setq-default flycheck-gcc-language-standard "gnu++14")
+  (c-set-offset 'innamespace 0))
 
 (add-hook 'c++-mode-hook 'c++-mode-style-hook)
 (add-hook
@@ -254,3 +405,15 @@
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-x C-SPC") 'mc/edit-lines)
+
+(defun insert-date (format)
+  "Insert the current date into the buffer at the point."
+  (interactive "sformat (%%Y-%%m-%%d): ")
+  (insert (format-time-string
+           (if (string= format "")
+               "%Y-%m-%d"
+             format))))
+
+
+(setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+(setq erc-lurker-threshold-time 3600)

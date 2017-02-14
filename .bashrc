@@ -26,7 +26,12 @@ export BLAS=/usr/lib/libblas.so
 export LAPACK=/usr/lib/liblapack.so
 
 # Add my shit here mang.
-export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.0.0-p481/bin:$HOME/.rvm/gems/ruby-2.0.0-p481@global/bin:$HOME/.rvm/gems/ruby-2.0.0-p481/bin:/usr/local/sml/bin/:$PATH
+export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:/usr/local/sml/bin/:$PATH
+
+export LIBRARY_PATH=$HOME/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/lib:$LD_LIBRARY_PATH
+export CPATH=$HOME/include:$CPATH
+export CPLUS_INCLUDE_PATH=$HOME/include:$CPLUS_INCLUDE_PATH
 
 
 # Python nose complete
@@ -100,3 +105,13 @@ function drop-test-mongo-dbs()
 }
 
 export PATH="$PATH:/home/yui/miniconda3/bin"
+
+
+function mvvirtualenv() {
+    cpvirtualenv $1 $2
+    rmvirtualenv $1
+    find $WORKON_HOME/$2 -exec sed -i s|$WORKON_HOME/$1|$WORKON_HOME/$2|g 2> /dev/null \;
+    rm -rf ~/.ipython/profile_$1
+}
+
+complete -o default -o nospace -F _virtualenvs mvvirtualenv

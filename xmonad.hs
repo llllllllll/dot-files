@@ -36,12 +36,15 @@ main = do
 
 
 addedKeys :: [((ButtonMask, KeySym), X ())]
-addedKeys = [ ((0,xK_Print),        spawn "gnome-screenshot")
+addedKeys = [ ((0,xK_Print),        spawn screenShotCommand)
             , ((mod4Mask,xK_F2),    spawn "amixer set Master 1- unmute")
             , ((mod4Mask,xK_F3),    spawn "amixer set Master 1+ unmute")
             , ((mod4Mask,xK_grave), spawn "strp -c")
             ] ++ viewScreenKeys [xK_w, xK_e, xK_r]
   where
+      -- We need to sleep for 0.1 seconds to release the keyboard
+      -- before we spawn our screenshot command.
+      screenShotCommand = "sleep 0.1;screenshot"
       viewScreenKeys = viewScreenKeys' 0
       viewScreenKeys' _ [] = []
       viewScreenKeys' s (k:ts) = ((mod4Mask,k), viewScreen $ P s) :
@@ -51,11 +54,9 @@ addedKeys = [ ((0,xK_Print),        spawn "gnome-screenshot")
 manageHooks :: Query (Endo WindowSet)
 manageHooks =
     composeAll
-    [ isFullscreen <&&> notFirefox --> doFullFloat
+    [ isFullscreen --> doFullFloat
     , manageDocks <+> manageHook defaultConfig
     ]
-  where
-      notFirefox = (not . isInfixOf "firefox") <$> (map toLower <$> className)
 
 
 logHooks :: Handle -> X ()
