@@ -1,4 +1,4 @@
-Config { font = "xft:Droid Sans Mono:size=15:antialias=true"
+Config { font = "xft:Droid Sans Mono:size=11:antialias=true"
        , bgColor = "#383838"
        , fgColor = "#dfdbd2"
        , position = Top

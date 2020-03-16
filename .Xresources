@@ -34,6 +34,8 @@ xterm*cursorBlink:     true
 xterm*cursorOffTime:   500
 xterm*cursoronTime:    500
 xterm*metaSendsEscape: true
+XTerm*visualBell:      false
+xterm*faceName:        xft: Droid Sans Mono-16
 
 ! bold and underline -----------------------------------------------------------
 XTerm*colorBDMode:     true
@@ -49,4 +51,27 @@ Xft.rgba:              rgb
 Xft.hinting:           true
 Xft.hintstyle:         hintslight
 
-xterm*faceName:        xft: Droid Sans Mono-16
+! urxvt settings ---------------------------------------------------------------
+URxvt*dynamicColors:   true
+URxvt*utf8:            2
+URxvt*eightBitInput:   true
+URxvt*saveLines:       4096
+URxvt*scrollKey:       true
+URxvt*multiScroll:     true
+URxvt*toolBar:         false
+URxvt*cursorBlink:     true
+URxvt*cursorOffTime:   500
+URxvt*cursoronTime:    500
+URxvt*metaSendsEscape: true
+URxvt*visualBell:      false
+URxvt*font:            xft:Droid Sans Mono-16,xft:Kochi Gothic:antialias=false
+URxvt*scrollBar:       false
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer:true
+URxvt*scrollTtyKeypress:true
+
+! bold and underline -----------------------------------------------------------
+URxvt*colorBDMode:     true
+URxvt*colorBD:         #00FFFF
+URxvt*colorULMode:     true
+URxvt*colorUL:         rgb:e4/e4/e4

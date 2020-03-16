@@ -5,7 +5,7 @@
 [[ $- != *i* ]] && return
 
 # TODO: Rice this.
-PS1='[\u@\h \W]\$ '
+PS1='[\u \W]\$ '
 
 if [ -f $HOME/.bash_aliases ]
 then
@@ -18,7 +18,7 @@ source /usr/share/doc/pkgfile/command-not-found.bash
 source /usr/bin/virtualenvwrapper.sh
 source ~/.profile
 
-export TERM=xterm-256color
+export TERM=rxvt-unicode-256color
 export EDITOR='emacs -nw'
 export BROWSER=firefox
 export ATLAS=/usr/lib/libatlas.so
@@ -26,12 +26,16 @@ export BLAS=/usr/lib/libblas.so
 export LAPACK=/usr/lib/liblapack.so
 
 # Add my shit here mang.
-export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:/usr/local/sml/bin/:$PATH
+export PATH=$HOME/bin:$HOME/.cabal/bin:$HOME/.rvm/bin:/opt/intel/vtune_amplifier_2019.2.0.588069/bin64/:$PATH
 
-export LIBRARY_PATH=$HOME/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=$HOME/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=$HOME/lib:/usr/local/lib:/usr/local/dbg/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/lib:/usr/local/lib:/usr/local/dbg/lib:$LD_LIBRARY_PATH
 export CPATH=$HOME/include:$CPATH
 export CPLUS_INCLUDE_PATH=$HOME/include:$CPLUS_INCLUDE_PATH
+
+export ASPROOT=$HOME/aur
+
+INTEL_LICENSE_FILE=/opt/intel/licenses
 
 
 # Python nose complete
@@ -104,8 +108,6 @@ function drop-test-mongo-dbs()
     mongo admin --eval 'db.getMongo().getDBNames().filter(function(name){return name.match("qexec_test_")}).forEach(function(name){db = db.getMongo().getDB(name); print(db); db.dropDatabase()})'
 }
 
-export PATH="$PATH:/home/yui/miniconda3/bin"
-
 
 function mvvirtualenv() {
     cpvirtualenv $1 $2
@@ -115,3 +117,5 @@ function mvvirtualenv() {
 }
 
 complete -o default -o nospace -F _virtualenvs mvvirtualenv
+
+complete -C /home/joe/projects/c++/h5s3/testbin/mc mc
